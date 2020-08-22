@@ -1,16 +1,17 @@
 // @TODO: YOUR CODE HERE!
-var svgWidth = 1000;
-var svgHeight = 1000;
+var svgWidth = 500;
+var svgHeight = 500;
+
 
 var margin = { top:30, right: 30, bottom: 30, left: 30}
 
 var chartWidth = svgWidth - margin.left - margin.right
-var	chartHeight = svgHeight = margin.top - margin.bottom
+var	chartHeight = svgHeight - margin.top - margin.bottom
 	
 var svg = d3.select("#scatter")
 			.append("svg")
 			.attr("width", svgWidth)
-			.attr("height", svgHeight)
+			.attr("height", 500)
 				
 var chartGroup = svg.append("g")
 				.attr("transform", `translate(${margin.left}, ${margin.top})`);
@@ -32,24 +33,24 @@ d3.csv("assets/data/data.csv").then(data => {
 						 .domain([0,d3.max(data, d => d.poverty)])
 						 .range([chartHeight, 0])
 
-	var bottomAxis = d3.axisBottom(xBandScale); 
-	var leftAxis = d3.axisLeft(yLinearScale); 
+	var xAxis = d3.axisBottom(xBandScale); 
+	var yAxis = d3.axisLeft(yLinearScale); 
 
 	chartGroup.append("g")
-			  .call(leftAxis); 
+			  .call(yAxis); 
 
 	chartGroup.append("g")
 			  .attr("transform", `translate(0, ${chartHeight})`)
-    		  .call(bottomAxis);
+    		  .call(xAxis);
 
     chartGroup.selectAll("#scatter")
     		  .data(data)
     		  .enter() 
     		  .append("circle")
-    		  .attr("cx", d => xBandScale(d.povery))
+    		  .attr("cx", d => xBandScale(d.poverty))
     		  .attr("cy", d => yLinearScale(d.healthcare))
     		  .attr("width", xBandScale.bandwidth())
-    		  .attr("height", d => chartHeight - yLinearScale(d.povery))
+    		  .attr("height", d => chartHeight - yLinearScale(d.poverty))
 });
 
 
