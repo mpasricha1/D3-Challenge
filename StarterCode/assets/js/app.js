@@ -1,5 +1,5 @@
 // @TODO: YOUR CODE HERE!
-var svgWidth = 500;
+var svgWidth = 1000;
 var svgHeight = 500;
 
 
@@ -27,15 +27,15 @@ d3.csv("assets/data/data.csv").then(data => {
 	var xBandScale = d3.scaleBand()
 					   .domain(data.map(d => d.healthcare))
 					   .range([0, chartWidth])
-					   .padding(0.1)
+					   .padding(0.1);
 
 	var yLinearScale = d3.scaleLinear()
 						 .domain([0,d3.max(data, d => d.poverty)])
-						 .range([chartHeight, 0])
+						 .range([chartHeight, 0]);
 
+	var yAxis = d3.axisLeft(yLinearScale);
 	var xAxis = d3.axisBottom(xBandScale); 
-	var yAxis = d3.axisLeft(yLinearScale); 
-
+	 
 	chartGroup.append("g")
 			  .call(yAxis); 
 
@@ -50,7 +50,7 @@ d3.csv("assets/data/data.csv").then(data => {
     		  .attr("cx", d => xBandScale(d.poverty))
     		  .attr("cy", d => yLinearScale(d.healthcare))
     		  .attr("width", xBandScale.bandwidth())
-    		  .attr("height", d => chartHeight - yLinearScale(d.poverty))
+    		  .attr("height", d => chartHeight - yLinearScale(d))
 });
 
 
