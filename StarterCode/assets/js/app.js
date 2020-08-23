@@ -3,7 +3,7 @@ var svgWidth = 600;
 var svgHeight = 500;
 
 
-var margin = { top:30, right: 30, bottom: 30, left: 30}
+var margin = { top:30, right: 30, bottom: 100, left: 70}
 
 var chartWidth = svgWidth - margin.left - margin.right
 var	chartHeight = svgHeight - margin.top - margin.bottom
@@ -11,7 +11,7 @@ var	chartHeight = svgHeight - margin.top - margin.bottom
 var svg = d3.select("#scatter")
 			.append("svg")
 			.attr("width", svgWidth)
-			.attr("height", 500)
+			.attr("height", svgHeight)
 				
 var chartGroup = svg.append("g")
 				.attr("transform", `translate(${margin.left}, ${margin.top})`);
@@ -50,8 +50,8 @@ d3.csv("assets/data/data.csv").then(data => {
     		  .attr("cy", d => yScale(d.healthcare))
     		  .attr("r", "10")
     		  .attr("fill", "lightblue")
-    		  .attr("opacity", 0.75)
-    		  .attr("height", d => chartHeight - yScale(d));
+    		  .attr("opacity", 0.5)
+    		  .attr("height", d => chartHeight - yScale(d) - 10);
 
     chartGroup.select("g")
     	.selectAll("cirle")
@@ -68,10 +68,10 @@ d3.csv("assets/data/data.csv").then(data => {
 
     chartGroup.append("text")
     	.attr("transform", "rotate(-90)")
-    	.attr("x", 0 - margin.left)
-    	.attr("y", 0 - chartHeight / 2)
+    	.attr("y", 0 - margin.left + 30)
+    	.attr("x", 0 - (chartHeight / 2) - 50)
     	.attr("font-size", "16px")
-    	.attr("text-anchor", "middle")
+    	.style("font-weight", "bold")
     	.text("Lacks Heathcare(%)");
 
    	chartGroup.append("text")             
