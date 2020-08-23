@@ -1,5 +1,5 @@
 // @TODO: YOUR CODE HERE!
-var svgWidth = 900;
+var svgWidth = 600;
 var svgHeight = 500;
 
 
@@ -62,22 +62,24 @@ d3.csv("assets/data/data.csv").then(data => {
     	.attr("x", d => xScale(d.poverty))
     	.attr("y", d => yScale(d.healthcare))
     	.attr("text-anchor", "middle")
-    	.attr("font-size", "10px")
+    	.attr("font-size", "11px")
     	.style("font-weight", "bold")
     	.attr("fill", "black");
 
     chartGroup.append("text")
     	.attr("transform", "rotate(-90)")
-    	.attr("x", 0 - (chartHeight/2))
-    	.attr("y", 0 - margin.left)
-    	.style("text-anchor", "middle")
-    	.text("Lacks Heathcare(%)")
+    	.attr("x", 0 - margin.left)
+    	.attr("y", 0 - chartHeight / 2)
+    	.attr("font-size", "16px")
+    	.attr("text-anchor", "middle")
+    	.text("Lacks Heathcare(%)");
 
    	chartGroup.append("text")             
       .attr("transform",
-            "translate(" + (chartWidth/2) + " ," + 
-                           (chartHeight + margin.top + 20) + ")")
-      .style("text-anchor", "middle")
+            `translate(${chartWidth/2}, ${chartHeight + margin.top})`)
+      .attr("font-size", "16px")
+      .attr("text-anchor", "middle")
+      .style("font-weight", "bold")
       .text("In Poverty(%)");
 });
 
