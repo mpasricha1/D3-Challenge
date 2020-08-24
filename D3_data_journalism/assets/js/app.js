@@ -54,7 +54,7 @@ d3.csv("assets/data/data.csv").then(data => {
     		  .attr("height", d => chartHeight - yScale(d) - 10);
 
     chartGroup.select("g")
-    	.selectAll("cirle")
+    	.selectAll("circle")
     	.data(data)
     	.enter()
     	.append("text")
@@ -76,7 +76,7 @@ d3.csv("assets/data/data.csv").then(data => {
 
    	chartGroup.append("text")             
       .attr("transform",
-            `translate(${chartWidth/2}, ${chartHeight + margin.top})`)
+            `translate(${chartWidth/2}, ${chartHeight + margin.bottom - 50})`)
       .attr("font-size", "16px")
       .attr("text-anchor", "middle")
       .style("font-weight", "bold")
