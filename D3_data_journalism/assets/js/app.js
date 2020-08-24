@@ -42,7 +42,7 @@ d3.csv("assets/data/data.csv").then(data => {
 			  .attr("transform", `translate(0, ${chartHeight})`)
     		  .call(xAxis);
 
-    chartGroup.selectAll("circle")
+    var circleGroup = chartGroup.selectAll("circle")
     		  .data(data)
     		  .enter() 
     		  .append("circle")
@@ -69,7 +69,7 @@ d3.csv("assets/data/data.csv").then(data => {
     chartGroup.append("text")
     	.attr("transform", "rotate(-90)")
     	.attr("y", 0 - margin.left + 30)
-    	.attr("x", 0 - (chartHeight / 2) - 50)
+    	.attr("x", 0 - (chartHeight / 2) - 70)
     	.attr("font-size", "16px")
     	.style("font-weight", "bold")
     	.text("Lacks Heathcare(%)");
@@ -81,6 +81,25 @@ d3.csv("assets/data/data.csv").then(data => {
       .attr("text-anchor", "middle")
       .style("font-weight", "bold")
       .text("In Poverty(%)");
+
+    var toolTip = d3.tip()
+       .attr("class", "d3-tip")
+       .offset([90,-60])
+       .html(function(d){ 
+            return(`<strong>${d.state}, ${d.abbr}</strong><br>
+             <strong>Healthcare: ${d.healthcare}<br></strong>
+             <strong>Poverty ${d.poverty}</strong>`);
+       });
+
+    chartGroup.call(toolTip)
+
+    circleGroup.on("mouseover", d => {
+        toolTip.show(d,this)
+    })
+
+    .on("mouseout", (d,i) =>{
+        toolTip.hide(d)
+    });
 });
 
 
