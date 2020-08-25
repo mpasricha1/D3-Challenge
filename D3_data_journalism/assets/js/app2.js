@@ -27,19 +27,49 @@ d3.csv("assets/data/data.csv").then(data => {
 
   function xScale(data, chosenXAxis){
   	var xLinearScale = d3.scaleLinear()
-  					   .domain([d3.min(data, d=> d[chosenXAxis]),d3.max(data, d => d.poverty)])
-  					   .range([0, chartWidth]);
-    return xLinearScale
+  		.domain([d3.min(data, d=> d[chosenXAxis]),d3.max(data, d => d.poverty)])
+  		.range([0, chartWidth]);
+    return xLinearScale;
 
   };
 
-  function renderAxes(newXScale, xAxis){ 
-    var bottomAxis = d3.ax
+  function renderXAxes(newXScale, xAxis){ 
+    var xAxis = d3.axisBottom(xScale).ticks(10);
+
+    xAxis.transition()
+      .duration(1000)
+      .call(bottomAxis);
+
+    return xAxis;
   }
 
-	var yScale = d3.scaleLinear()
-						 .domain([3,d3.max(data, d => d.healthcare)])
-						 .range([chartHeight, 0]);
+  function yScale(data, chosenYAxis){
+  	var yLinearScale = d3.scaleLinear()
+  		.domain([3,d3.max(data, d => d.healthcare)])
+  		.range([chartHeight, 0]);
+    return yLinearScale;
+
+  }
+
+  function renderYAxis(newYScale, yAxis){
+    var yAxis = d3.axisLeft(yScale);
+
+    yAxis.transtion()
+      .duration(1000)
+      .call(leftAxis); 
+
+    return yAxis;
+  }
+
+  function renderCircles(circleGroup, newXScale, chosenXAxis, newYScale,chosenYAxis){
+
+    circleGroup.transition()
+      .duration(1000)
+      .attr("cx", d => newXScale(d[chosenXAxis]))
+      .attr("cy", d => newYScale(d[chosenYAxis]));
+
+    return circleGroup;
+  }
 
 	var yAxis = d3.axisLeft(yScale);
 	var xAxis = d3.axisBottom(xScale).ticks(10); 
